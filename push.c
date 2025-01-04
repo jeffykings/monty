@@ -17,9 +17,8 @@ void push(stack_t **stack, unsigned int line_number)
 		_free();
 		exit(EXIT_FAILURE);
 	}
-	if (global_vars.value != NULL && !is_integer(global_vars.value))
+	if (global_vars.value == NULL || !is_integer(global_vars.value))
 	{
-		printf("%s", global_vars.value);
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
@@ -48,8 +47,8 @@ bool is_integer(const char *str)
 		return (false);
 	}
 
-	if (*str == '-')
-		return (false);
+	if (*str == '-' || *str == '+')
+		str++;
 
 	while (*str)
 	{
