@@ -14,7 +14,7 @@ val_header global_vars = {NULL, NULL};
 int main(int argc, char **argv)
 {
 	FILE *fptr;
-	char line[50];
+	char line[1000];
 
 	unsigned int line_number = 1;
 

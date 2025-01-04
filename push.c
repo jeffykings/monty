@@ -17,7 +17,7 @@ void push(stack_t **stack, unsigned int line_number)
 		_free();
 		exit(EXIT_FAILURE);
 	}
-	if (!is_integer(global_vars.value))
+	if (global_vars.value != NULL && !is_integer(global_vars.value))
 	{
 		printf("%s", global_vars.value);
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
