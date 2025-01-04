@@ -11,7 +11,7 @@
 
 int get_opcode(char *line, int line_number)
 {
-	
+
 	int i;
 
 	instruction_t func_list[] = {
@@ -23,6 +23,7 @@ int get_opcode(char *line, int line_number)
 	stack_t *dlinked_lst = global_vars.head;
 
 	char *opcode1 = strtok(line, " ");
+
 	if (opcode1 == NULL || *opcode1 == '\n')
 		return (0);
 
