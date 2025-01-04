@@ -17,6 +17,7 @@ int get_opcode(char *line, int line_number)
 	instruction_t func_list[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pint", pint},
 		{NULL, NULL}
 	};
 

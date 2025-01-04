@@ -59,5 +59,6 @@ int get_opcode(char *line, int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 bool is_integer(const char *str);
 void push(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 
 #endif
