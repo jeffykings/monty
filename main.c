@@ -35,12 +35,8 @@ int main(int argc, char **argv)
 
 	while (fgets(line, sizeof(line), fptr) != NULL)
 	{
-		if (line[0] != '\n')
-		{
-			remove_newline(line);
-			get_opcode(line, line_number);
-		}
-
+		remove_newline(line);
+		get_opcode(line, line_number);
 		line_number++;
 	}
 

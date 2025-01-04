@@ -22,6 +22,8 @@ int get_opcode(char *line, int line_number)
 	int i = 0;
 
 	char *opcode1 = strtok(line, " ");
+	if (opcode1 == NULL)
+		return (1);
 
 	global_vars.value = strtok(NULL, " ");
 
