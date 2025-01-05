@@ -25,6 +25,7 @@ int get_opcode(char *line, int line_number)
 		{"sub", sub},
 		{"div", divide},
 		{"mul", mul},
+		{"mod", mod},
 		{NULL, NULL}
 	};
 
