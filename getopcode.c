@@ -27,6 +27,7 @@ int get_opcode(char *line, int line_number)
 		{"mul", mul},
 		{"mod", mod},
 		{"#", comment},
+		{"pchar", pchar},
 		{NULL, NULL}
 	};
 
