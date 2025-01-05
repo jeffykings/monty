@@ -23,6 +23,8 @@ int get_opcode(char *line, int line_number)
 		{"add", add},
 		{"nop", nop},
 		{"sub", sub},
+		{"div", divide},
+		{"mul", mul},
 		{NULL, NULL}
 	};
 
