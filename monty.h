@@ -60,5 +60,7 @@ void pall(stack_t **stack, unsigned int line_number);
 bool is_integer(const char *str);
 void push(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void _free1(void);
 
 #endif
