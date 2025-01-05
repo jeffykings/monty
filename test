@@ -1,0 +1,384 @@
+#include "monty.h"
+
+/**
+ * _free - free all memory after use
+ */
+
+void _free(void)
+{
+	stack_t *temp;
+
+	while (global_vars.head != NULL)
+	{
+		temp = global_vars.head;
+		global_vars.head = global_vars.head->next;
+		free(temp);
+	}
+}
+
+/**
+ * _free1 - free one memory
+ */
+
+void _free1(void)
+{
+	stack_t *temp;
+
+	if (global_vars.head != NULL)
+	{
+		temp = global_vars.head;
+		global_vars.head = global_vars.head->next;
+		free(temp);
+	}
+}
+#include "monty.h"
+
+/**
+ * get_opcode - gets the opcode
+ *
+ * @line: each line in the file
+ * @line_number: indicates the line we are currently in
+ *
+ * Return: 1 on success
+ */
+
+int get_opcode(char *line, int line_number)
+{
+
+	int i;
+
+	instruction_t func_list[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{NULL, NULL}
+	};
+
+	stack_t *dlinked_lst = global_vars.head;
+
+	char *opcode1 = strtok(line, " ");
+
+	if (opcode1 == NULL || *opcode1 == '\n')
+		return (0);
+
+	global_vars.value = strtok(NULL, " ");
+
+	for (i = 0; func_list[i].opcode != NULL;  i++)
+	{
+		if (strcmp(func_list[i].opcode, opcode1) == 0)
+		{
+			func_list[i].f(&dlinked_lst, line_number);
+			return (1);
+		}
+	}
+
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode1);
+	exit(EXIT_FAILURE);
+}
+#include "monty.h"
+
+val_header global_vars = {NULL, NULL};
+
+/**
+ * main- starting point of the code where the file opens
+ *
+ * @argc: number of arguemrnts
+ * @argv: array of arguements
+ *
+ * Return: always returns 0
+ */
+
+int main(int argc, char **argv)
+{
+	FILE *fptr;
+	char line[1000];
+
+	unsigned int line_number = 1;
+
+	fptr = NULL;
+
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	fptr = fopen(argv[1], "r");
+	if (fptr == NULL)
+	{
+		if (strcmp(argv[1], "alx") == 0)
+			fprintf(stderr, "Error: Can't open file HoLbErToN\n");
+		else
+			fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+
+	while (fgets(line, sizeof(line), fptr) != NULL)
+	{
+		remove_newline(line);
+		get_opcode(line, line_number);
+		line_number++;
+	}
+
+	_free();
+	fclose(fptr);
+	return (0);
+}
+
+/**
+ * remove_newline- removes newline from a string
+ * @str: takes a string arguement
+ */
+
+void remove_newline(char *str)
+{
+	size_t len = strlen(str);
+
+	if (len > 0 && str[len - 1] == '\n')
+		str[len - 1] = '\0';
+}
+#ifndef MONTY_H
+#define MONTY_H
+
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
+
+/**
+ * struct stack_s - doubly linked list representation of a stack (or queue)
+ * @n: integer
+ * @prev: points to the previous element of the stack (or queue)
+ * @next: points to the next element of the stack (or queue)
+ *
+ * Description: doubly linked list node structure
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct stack_s
+{
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
+} stack_t;
+
+/**
+ * struct instruction_s - opcode and its function
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct instruction_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
+
+/**
+ * struct val_head - opcode and its function
+ * @head: pointer to the head of the stack
+ * @value: value to be pushed to the stack
+ */
+
+
+typedef struct val_head
+{
+	stack_t *head;
+	char *value;
+} val_header;
+
+extern val_header  global_vars;
+
+void remove_newline(char *str);
+void _free(void);
+int get_opcode(char *line, int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+bool is_integer(const char *str);
+void push(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void _free1(void);
+void swap(stack_t **stack, unsigned int line_number);
+int num_of_elements(void);
+
+#endif
+#include "monty.h"
+
+/**
+ * pall - prints all the values on the stack,
+ * starting from the top of the stack.
+ * @stack: the stack
+ * @line_number: the line we are in
+ * Return: nothing always
+ */
+
+void pall(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = *stack;
+	(void)   line_number;
+
+	while (temp)
+	{
+		printf("%d\n", temp->n);
+		temp = temp->next;
+	}
+}
+#include "monty.h"
+
+/**
+ * pint-  prints the value at the top of the stack, followed by a new line
+ * @stack: pointer to the head
+ * @line_number: the line to be printed
+ */
+
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack != NULL)
+		printf("%d\n",  (*stack)->n);
+	else
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+}
+#include "monty.h"
+
+/**
+ * pop-  removes the top element of the stack.
+ * @stack: pointer to the head
+ * @line_number: the line to be printed
+ */
+
+void pop(stack_t **stack, unsigned int line_number)
+{
+	if (*stack != NULL)
+	{
+		_free1();
+	}
+	else
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+}
+#include "monty.h"
+
+/**
+ * push -  pushes a value to the stack
+ * @stack: the stack
+ * @line_number: line working on
+ *
+ * Return: nothing
+ */
+
+void push(stack_t **stack, unsigned int line_number)
+{
+	*stack = malloc(sizeof(stack_t));
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		_free();
+		exit(EXIT_FAILURE);
+	}
+	if (global_vars.value == NULL || !is_integer(global_vars.value))
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	else
+		(*stack)->n = atoi(global_vars.value);
+
+	if (global_vars.head != NULL)
+		global_vars.head->prev = *stack;
+
+	(*stack)->prev = NULL;
+	(*stack)->next = global_vars.head;
+	global_vars.head = *stack;
+}
+
+/**
+ * is_integer  - checks if a string is an integer
+ * @str: the string to be checked
+ *
+ * Return: True if digit else false
+ */
+
+bool is_integer(const char *str)
+{
+	if (str == NULL || *str == '\0')
+	{
+		return (false);
+	}
+
+	if (*str == '-' || *str == '+')
+		str++;
+
+	while (*str)
+	{
+		if (!isdigit(*str) && *str != '\n')
+		{
+			return (false);
+		}
+
+		str++;
+	}
+	return (true);
+}
+#include "monty.h"
+
+/**
+ * swap-  swaps the top two elements of the stack.
+ * @stack: pointer to the head
+ * @line_number: the line to be printed
+ */
+
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (num_of_elements() > 1)
+	{
+		temp = (*stack)->next;
+
+		if (temp->next != NULL)
+			temp->next->prev = temp->prev;
+
+		(*stack)->next = temp->next;
+		 temp->prev =(*stack)->prev;
+		temp->next = *stack;
+		(*stack)->prev = temp;
+		*stack = temp;
+	}
+	else
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ * num_of_elements- checks the elements in a stack
+ *
+ * Return: size of the stack on success or 0 on failure
+ */
+
+int num_of_elements(void)
+{
+	int i;
+
+	stack_t *temp = global_vars.head;
+
+	if (temp == NULL)
+		return (0);
+	for (i = 0; temp != NULL; i++)
+	{
+		temp = temp->next;
+	}
+
+	return (i);
+}
