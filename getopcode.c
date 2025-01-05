@@ -28,6 +28,7 @@ int get_opcode(char *line, int line_number)
 		{"mod", mod},
 		{"#", comment},
 		{"pchar", pchar},
+		{"pstr", pstr},
 		{NULL, NULL}
 	};
 
