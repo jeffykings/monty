@@ -26,6 +26,7 @@ int get_opcode(char *line, int line_number)
 		{"div", divide},
 		{"mul", mul},
 		{"mod", mod},
+		{"#", comment},
 		{NULL, NULL}
 	};
 
@@ -37,6 +38,12 @@ int get_opcode(char *line, int line_number)
 		return (0);
 
 	global_vars.value = strtok(NULL, " ");
+
+	if (*opcode1 == '#')
+	{
+		func_list[11].f(&dlinked_lst, line_number);
+		return (1);
+	}
 
 	for (i = 0; func_list[i].opcode != NULL;  i++)
 	{
