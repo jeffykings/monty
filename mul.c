@@ -14,7 +14,7 @@ void mul(stack_t **stack, unsigned int line_number)
 	if (num_of_elements() > 1)
 	{
 		temp = (*stack)->next;
-		temp->n = temp->n - (*stack)->n;
+		temp->n = temp->n * (*stack)->n;
 		_free1();
 	}
 	else
