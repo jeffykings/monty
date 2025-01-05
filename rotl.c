@@ -15,7 +15,7 @@ void rotl(stack_t **stack, unsigned int line_number)
 
 	temp2 = (*stack)->next;
 
-	if (*stack != NULL)
+	if ((*stack != NULL) && (num_of_elements() > 1))
 	{
 		temp = mv_pointer2_end();
 		(*stack)->next->prev = (*stack)->prev;
