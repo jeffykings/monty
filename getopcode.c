@@ -20,6 +20,7 @@ int get_opcode(char *line, int line_number)
 		{"pint", pint},
 		{"pop", pop},
 		{"swap", swap},
+		{"add", add},
 		{NULL, NULL}
 	};
 

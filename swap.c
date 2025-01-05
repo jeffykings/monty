@@ -18,7 +18,7 @@ void swap(stack_t **stack, unsigned int line_number)
 			temp->next->prev = temp->prev;
 
 		(*stack)->next = temp->next;
-		 temp->prev =(*stack)->prev;
+		temp->prev = (*stack)->prev;
 		temp->next = *stack;
 		(*stack)->prev = temp;
 		global_vars.head = temp;
