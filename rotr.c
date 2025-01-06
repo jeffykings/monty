@@ -19,5 +19,6 @@ void rotr(stack_t **stack, unsigned int line_number)
 		temp->prev = (*stack)->prev;
 		temp->next = *stack;
 		(*stack)->prev = temp;
+		global_vars.head = temp;
 	}
 }
