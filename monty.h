@@ -49,6 +49,7 @@ typedef struct val_head
 {
 	stack_t *head;
 	char *value;
+	int op_format_set;
 } val_header;
 
 extern val_header  global_vars;
@@ -76,5 +77,7 @@ void pstr(stack_t **stack, unsigned int line_number);
 void rotl(stack_t **stack, unsigned int line_number);
 stack_t *mv_pointer2_end(void);
 void rotr(stack_t **stack, unsigned int line_number);
+void stack_push(stack_t **stack, unsigned int line_number);
+void queue_push(stack_t **stack, unsigned int line_number);
 
 #endif

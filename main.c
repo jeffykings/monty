@@ -1,6 +1,6 @@
 #include "monty.h"
 
-val_header global_vars = {NULL, NULL};
+val_header global_vars = {NULL, NULL, 0};
 
 /**
  * main- starting point of the code where the file opens

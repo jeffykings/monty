@@ -43,6 +43,18 @@ int get_opcode(char *line, int line_number)
 
 	global_vars.value = strtok(NULL, " ");
 
+	if (strcmp(opcode1, "queue") == 0)
+	{
+		global_vars.op_format_set = 1;
+		return (1);
+	}
+
+	if (strcmp(opcode1, "stack") == 0)
+	{
+		global_vars.op_format_set = 0;
+		return (1);
+	}
+
 	if (*opcode1 == '#')
 	{
 		func_list[11].f(&dlinked_lst, line_number);
